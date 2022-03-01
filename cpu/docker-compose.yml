@@ -1,0 +1,18 @@
+# docker-compose file managing Nginx and the application
+# Loading some variables from the .env file:
+#   - DOMAIN: DNS domain name
+#   - EMAIL: Maintainer email
+#   - APP_FOLDER: Directory containing the application
+#   - FLASK_APP: Flask entrypoint
+#   - FLASK_ENV: Flask environment
+
+version: "3.2"
+
+services:
+  application:
+      build: ./src
+      command: gunicorn --bind 0.0.0.0:5000 --workers 3 app:app --preload
+      environment:
+        - FLASK_ENV=development
+      ports:
+        - 5000:5000

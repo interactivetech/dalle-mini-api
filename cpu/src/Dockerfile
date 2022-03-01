@@ -1,0 +1,60 @@
+# Flask app Dockerfile
+# FROM ubuntu:18.04
+FROM nvidia/cuda:11.1.1-cudnn8-devel-ubuntu18.04
+ENV DEBIAN_FRONTEND=noninteractive
+# Install needed dependencies for our app to run.
+RUN apt update -y \
+  && apt install -y \
+    gcc \
+    libffi-dev \
+    musl-dev \
+    git \
+    python3-pip \
+    python3-dev \
+    && cd /usr/local/bin \
+    && ln -s /usr/bin/python3 python \
+    && pip3 --no-cache-dir install --upgrade pip 
+#  RUN apt install -y g++ jpeg-dev zlib-dev libjpeg make
+# Remove apt cache to make the image smaller
+RUN rm -rf /var/lib/apt/lists/*
+RUN pip install --upgrade pip setuptools wheel
+
+WORKDIR /opt/app
+
+# App non-root user
+# ENV GROUP=app
+# ENV USER=flask
+# ENV UID=12345
+# ENV GID=23456
+# RUN addgroup --gid "$GID" "$GROUP" \
+#   && adduser --uid "$UID" \
+#     --disabled-password \
+#     --gecos "" \
+#     --ingroup "$GROUP" \
+#     "$USER"
+
+# Switch to the non-root user
+# USER "$USER"
+# ENV PATH="/home/$USER/.local/bin:${PATH}"
+
+# Copy requirements file to our container, install, and remove
+# files to we don't need to reduce the container size
+COPY requirements.txt .
+RUN pip install \
+    --no-cache-dir \
+    --no-warn-script-location \
+    --user \
+    -r requirements.txt 
+  # && find "/home/$USER/.local" \
+  #   \( -type d -a -name test -o -name tests \) \
+  #   -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
+  #   -exec rm -rf '{}' +
+
+# Copy app to container (with privileges to non-root user)
+# COPY --chown=$USER:$GROUP . .
+COPY . . 
+# COPY model-1reghx5l:v9 model-1reghx5l:v9
+# COPY vqgan_weights . 
+# COPY clip_weights . 
+# COPY clip_processor_weights . 
+# Gunicorn is run from the docker-compose file

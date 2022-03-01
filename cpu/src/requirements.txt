@@ -1,0 +1,26 @@
+certifi
+charset-normalizer
+click
+cycler
+Flask
+fonttools
+gunicorn
+idna
+itsdangerous
+Jinja2
+kiwisolver
+MarkupSafe
+numpy
+packaging
+Pillow
+pyparsing
+python-dateutil
+requests
+six
+tqdm
+urllib3
+Werkzeug
+transformers
+# git+https://github.com/google/flax.git
+git+https://github.com/patil-suraj/vqgan-jax.git
+git+https://github.com/borisdayma/dalle-mini.git@e558000387e53a73d4182a8ae389af625bb7a11d
