@@ -21,6 +21,7 @@ tqdm
 urllib3
 Werkzeug
 transformers
+#jaxlib==0.1.65+cuda110 -f https://storage.googleapis.com/jax-releases/jax_releases.html 
 # git+https://github.com/google/flax.git
 git+https://github.com/patil-suraj/vqgan-jax.git
 git+https://github.com/borisdayma/dalle-mini.git@e558000387e53a73d4182a8ae389af625bb7a11d

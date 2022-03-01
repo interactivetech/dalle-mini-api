@@ -24,6 +24,8 @@ from flax.jax_utils import replicate
 from base64 import encodebytes
 import io
 import wandb
+import os
+wandb.login(key='7ac71ae3a1191ddb6de757ad0c093bb311f44a04')
 # DALLE_WEIGHTS='/Users/mendeza/Documents/github_projects/dalle-mini/tools/inference/artifacts/model-1reghx5l:v9'
 # VQGAN_WEIGHTS='/Users/mendeza/Documents/github_projects/dalle-mini/tools/inference/vqgan_weights'
 # CLIP_WEIGHTS='/Users/mendeza/Documents/github_projects/dalle-mini/tools/inference/clip_weights'

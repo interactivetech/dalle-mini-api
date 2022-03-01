@@ -11,8 +11,8 @@ version: "3.2"
 services:
   application:
       build: ./src
-      command: gunicorn --bind 0.0.0.0:5000 --workers 3 app:app --preload
+      command: gunicorn --bind localhost:8081 --workers 3 app:app --preload
       environment:
         - FLASK_ENV=development
       ports:
-        - 5000:5000
+        - 8081:8081
