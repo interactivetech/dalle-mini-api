@@ -1,0 +1,35 @@
+FROM nvidia/cuda:11.1.1-devel-ubuntu18.04
+
+# declare the image name
+ENV IMG_NAME=11.1.1-devel-ubuntu18.04 \
+    # declare what jaxlib tag to use
+    # if a CI/CD system is expected to pass in these arguments
+    # the dockerfile should be modified accordingly
+    JAXLIB_VERSION=0.3.0
+
+# install python3-pip
+RUN apt update && apt install python3-pip -y
+
+# install dependencies via pip
+#RUN pip3 install numpy scipy six wheel jaxlib==0.3.0+cuda11.cudnn805-cp37 jaxlib-0.3.0+cuda11.cudnn805 -f jaxlib-0.3.0+cuda11.cudnn805-cp37-none-manylinux2010_x86_64.whl
+RUN pip3 install numpy scipy six wheel
+#RUN pip3 install jaxlib@https://storage.googleapis.com/jax-releases/cuda11/jaxlib-0.3.0+cuda11.cudnn805-cp37-none-manylinux2010_x86_64.whl
+
+
+RUN pip3 install --upgrade pip setuptools wheel
+
+COPY . . 
+
+#RUN pip3 install \
+#    --no-cache-dir \
+#    --no-warn-script-location \
+#    --user \
+#    -r requirements.txt
+  # && find "/home/$USER/.local" \
+  #   \( -type d -a -name test -o -name tests \) \
+  #   -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
+  #   -exec rm -rf '{}' +
+
+# Copy app to container (with privileges to non-root user)
+#COPY --chown=$USER:$GROUP . .
+#COPY . .

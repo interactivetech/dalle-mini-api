@@ -1,11 +1,28 @@
 # Flask app Dockerfile
 # FROM ubuntu:18.04
 #FROM nvidia/cuda:11.1.1-cudnn8-devel-ubuntu18.04
+#FROM tensorflow/tensorflow:2.4.0-gpu
 FROM gcr.io/tensorflow-testing/nosla-cuda10.0-cudnn7-ubuntu16.04-manylinux2010
+#FROM nvidia/cuda:11.1.1-devel-ubuntu20.04
+
+# declare the image name
+#ENV IMG_NAME=11.6.0-devel-ubuntu20.04 \
+    # declare what jaxlib tag to use
+    # if a CI/CD system is expected to pass in these arguments
+    # the dockerfile should be modified accordingly
+    #JAXLIB_VERSION=0.3.0
+
+# install python3-pip
+#RUN apt update && apt install python3-pip -y
+
+# install dependencies via pip
+#RUN pip3 install numpy scipy six wheel jaxlib==${JAXLIB_VERSION}+cuda11.cudnn82 -f https://storage.googleapis.com/jax-releases/jax_releases.html jax[cuda11_cudnn82] -f https://storage.googleapis.com/jax-releases/jax_releases.html
 ENV DEBIAN_FRONTEND=noninteractive
+#RUN rm -f /etc/apt/sources.list.d/jonathonf-ubuntu-python-3_6-xenial.list
+
 # Install needed dependencies for our app to run.
-RUN apt update -y \
-  && apt install -y \
+RUN apt-get update -y \
+  && apt-get install -y \
     gcc \
     libffi-dev \
     musl-dev \
@@ -14,12 +31,19 @@ RUN apt update -y \
     python3-pip \
     python3-dev \
     && cd /usr/local/bin \
-    && ln -s /usr/bin/python3 python \
+    && ln -sf /usr/bin/python3 python \
     && pip3 --no-cache-dir install --upgrade pip 
 #  RUN apt install -y g++ jpeg-dev zlib-dev libjpeg make
 # Remove apt cache to make the image smaller
 RUN rm -rf /var/lib/apt/lists/*
 RUN pip install --upgrade pip setuptools wheel
+# Change the CUDA version if it doesn't match the installed version.
+#ARG JAX_CUDA_VERSION=10.0
+#COPY install_cuda.sh /install_cuda.sh
+#RUN chmod +x /install_cuda.sh
+#RUN /bin/bash -c 'if [[ ! "$CUDA_VERSION" =~ ^$JAX_CUDA_VERSION.*$ ]]; then \
+#  /install_cuda.sh $JAX_CUDA_VERSION; \
+#  fi'
 
 WORKDIR /opt/app
 
@@ -57,9 +81,9 @@ RUN pip install \
   #   -exec rm -rf '{}' +
 
 # Copy app to container (with privileges to non-root user)
-# COPY --chown=$USER:$GROUP . .
+#COPY --chown=$USER:$GROUP . .
 COPY . . 
-# RUN chown -R $USER:$GROUP . 
+RUN sudo chmod -R a+rwx . 
 # COPY model-1reghx5l:v9 model-1reghx5l:v9
 # COPY vqgan_weights . 
 # COPY clip_weights . 
