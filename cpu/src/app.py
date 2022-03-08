@@ -10,10 +10,10 @@ from PIL import Image
 import io
 import numpy as np
 from model import load_model, generate_images, load_model2
-app = Flask(__name__)
 
 
 model,tokenizer,vqgan,clip,processor,model_params, vqgan_params, clip_params = load_model2()
+app = Flask(__name__)
 
 # def get_response_image(image_path):
 #     pil_img = Image.open(image_path, mode='r') # reads the PIL image
