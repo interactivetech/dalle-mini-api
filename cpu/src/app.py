@@ -29,7 +29,7 @@ def get_response_image(im):
 
 @app.route('/')
 def index():
-    return "I love you Kyra!! <3"
+    return "Welcome to dalleapi.com"
 
 @app.route('/generate', methods=['POST'])
 def generate():
