@@ -172,7 +172,8 @@ def generate_images(
                 processor,
                 model_params,
                 vqgan_params,
-                clip_params
+                clip_params,
+                gen_top_k=4
                 ):
     '''
     '''
@@ -226,7 +227,7 @@ def generate_images(
     n_predictions = n_images
 
     # We can customize top_k/top_p used for generating samples
-    gen_top_k = None
+    gen_top_k = gen_top_k
     gen_top_p = None
 
     # generate images
@@ -275,9 +276,11 @@ def get_response_image(im):
 if __name__ == '__main__':
     model,tokenizer,vqgan,clip,processor,model_params, vqgan_params, clip_params = load_model()
     n_images=2
+    gen_top_k=4
     images =generate_images(
                     "A red cat",
                     n_images,
+                    gen_top_k,
                     model,
                     tokenizer,
                     vqgan,

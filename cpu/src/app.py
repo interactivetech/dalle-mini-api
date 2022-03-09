@@ -42,9 +42,18 @@ def generate():
         try:
             input_json = request.get_json(force=True) 
             print("Prompt: {}".format(input_json['prompt']))
+            timestamp = strftime('[%Y-%b-%d %H:%M]')
+            app.logger.info('%s %s %s %s %s %s',
+                            timestamp,
+                            request.remote_addr,
+                            request.method,
+                            request.scheme,
+                            request.full_path,
+                            input_json['prompt'])
             images =generate_images(
                 input_json['prompt'],
                 input_json['n_images'],
+                input_json['gen_top_k'],
                 model,
                 tokenizer,
                 vqgan,
@@ -57,7 +66,10 @@ def generate():
             # encoded_imges = []
             # for image_path in range(10):
             #     encoded_imges.append(get_response_image_test())
-            return jsonify({'prompt':input_json['prompt'],'result': encoded_images})
+            return jsonify({'prompt':input_json['prompt'],
+                            'n_images':input_json['n_images'],
+                            'gen_top_k':input_json['gen_top_k'],
+                            'result': encoded_images})
         except:
             jsonify({"sorry": "Sorry, no results! Please try again."}), 500
 
