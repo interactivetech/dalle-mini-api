@@ -43,14 +43,17 @@ def generate():
         try:
             input_json = request.get_json(force=True) 
             print("Prompt: {}".format(input_json['prompt']))
-            timestamp = strftime('[%Y-%b-%d %H:%M]')
-            app.logger.info('%s %s %s %s %s %s',
+            timestamp = strftime('%Y-%b-%d-%H:%M')
+            app.logger.info('%s,%s,%s,%s,%s,%s,%s,%s',
                     timestamp,
                     request.remote_addr,
                     request.method,
                     request.scheme,
                     request.full_path,
-                    input_json)
+                    input_json['prompt'],
+                    input_json['n_images'],
+                    input_json['gen_top_k']
+                    )
             images =generate_images(
                 input_json['prompt'],
                 input_json['n_images'],
@@ -90,10 +93,11 @@ def generate():
 #     return e.status_code
 
 if __name__ == '__main__':
-    handler = RotatingFileHandler('app.log', maxBytes=100000, backupCount=3)
+    handler = RotatingFileHandler('app.csv', maxBytes=100000, backupCount=3)
     logger = logging.getLogger('tdm')
     app.logger.setLevel(logging.INFO)
     app.logger.addHandler(handler)
+    app.logger.info("timestamp,request.remote_addr,request.method,request.scheme,request.full_path,input_json")
     app.run(
         host="0.0.0.0",
         port=80
