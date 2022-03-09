@@ -49,7 +49,6 @@ def generate():
             images =generate_images(
                 input_json['prompt'],
                 input_json['n_images'],
-                input_json['gen_top_k'],
                 model,
                 tokenizer,
                 vqgan,
@@ -57,7 +56,9 @@ def generate():
                 processor,
                 model_params, 
                 vqgan_params, 
-                clip_params)
+                clip_params,
+                input_json['gen_top_k'],
+                )
             encoded_images = [get_response_image(i) for i in images]
             # encoded_imges = []
             # for image_path in range(10):

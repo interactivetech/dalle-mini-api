@@ -165,6 +165,7 @@ def load_model():
 def generate_images(
                 prompt,
                 n_images,
+                gen_top_k,
                 model,
                 tokenizer,
                 vqgan,
