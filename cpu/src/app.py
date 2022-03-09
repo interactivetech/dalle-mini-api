@@ -29,7 +29,7 @@ def get_response_image(im):
 
 @app.route('/')
 def index():
-    return "Hello World"
+    return "I love you Kyra!! <3"
 
 @app.route('/generate', methods=['POST'])
 def generate():
