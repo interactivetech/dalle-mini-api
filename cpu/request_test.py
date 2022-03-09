@@ -10,11 +10,11 @@ from tqdm import tqdm
 t0=time()
 # for i in tqdm(range(1)):
 # prompt = {'prompt':'the Eiffel tower on the moon','n_images':32}
-prompt = {'prompt':'A blue table','n_images':32}
+prompt = {'prompt':'A blue table','n_images':1}
 
 # prompt = {'cat':'A blue table'}
 # res = requests.post('http://localhost:5000/generate', json=prompt)
-res = requests.post('http://3.227.11.255:5000/generate',json=prompt)
+res = requests.post('http://dalleapi.com/generate',json=prompt)
 res_json = json.loads(res.text)
 print("Time: {:.3f} seconds".format(time()-t0))
 if 'result' in res_json:
