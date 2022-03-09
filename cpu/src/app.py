@@ -71,7 +71,7 @@ def generate():
                             'gen_top_k':input_json['gen_top_k'],
                             'result': encoded_images})
         except:
-            jsonify({"sorry": "Sorry, no results! Please try again."}), 500
+            return jsonify({"sorry": "Sorry, no results! Please try again."}), 500
 
 @app.after_request
 def after_request(response):
@@ -79,12 +79,12 @@ def after_request(response):
     app.logger.info('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
     return response
 
-@app.errorhandler(Exception)
-def exceptions(e):
-    tb = traceback.format_exc()
-    timestamp = strftime('[%Y-%b-%d %H:%M]')
-    app.logger.error('%s %s %s %s %s 5xx INTERNAL SERVER ERROR\n%s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, tb)
-    return e.status_code
+# @app.errorhandler(Exception)
+# def exceptions(e):
+#     tb = traceback.format_exc()
+#     timestamp = strftime('[%Y-%b-%d %H:%M]')
+#     app.logger.error('%s %s %s %s %s 5xx INTERNAL SERVER ERROR\n%s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, tb)
+#     return e.status_code
 
 if __name__ == '__main__':
     handler = RotatingFileHandler('app.log', maxBytes=100000, backupCount=3)
