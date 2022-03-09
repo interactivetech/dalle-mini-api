@@ -15,8 +15,10 @@ import logging
 from logging.handlers import RotatingFileHandler
 from time import strftime
 import traceback
-
+from time import time
+t0=time()
 model,tokenizer,vqgan,clip,processor,model_params, vqgan_params, clip_params = load_model2()
+print("Done Loading, time: {} sec.".format(time()-t0))
 app = Flask(__name__)
 
 # def get_response_image(image_path):
