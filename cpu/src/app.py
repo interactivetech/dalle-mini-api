@@ -72,11 +72,11 @@ def generate():
             print(e)
             return jsonify({"sorry": "Sorry, no results! Please try again."}), 500
 
-@app.after_request
-def after_request(response):
-    timestamp = strftime('[%Y-%b-%d %H:%M]')
-    app.logger.info('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
-    return response
+# @app.after_request
+# def after_request(response):
+#     timestamp = strftime('[%Y-%b-%d %H:%M]')
+#     app.logger.info('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+#     return response
 
 # @app.errorhandler(Exception)
 # def exceptions(e):
@@ -88,11 +88,9 @@ def after_request(response):
 if __name__ == '__main__':
     handler = RotatingFileHandler('app.log', maxBytes=100000, backupCount=3)
     # logger = logging.getLogger('tdm')
-    app.logger.addHandler(handler)
     app.logger.setLevel(logging.INFO)
-
+    app.logger.addHandler(handler)
     app.run(
         host="0.0.0.0",
-        port=80,
-        debug=True
+        port=80
     )
