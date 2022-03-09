@@ -17,6 +17,11 @@ from flask import Flask, request, jsonify
 from time import strftime
 import traceback
 
+handler = RotatingFileHandler('app.log', maxBytes=100000, backupCount=3)
+logger = logging.getLogger('tdm')
+logger.setLevel(logging.ERROR)
+logger.addHandler(handler)
+
 model,tokenizer,vqgan,clip,processor,model_params, vqgan_params, clip_params = load_model2()
 app = Flask(__name__)
 
@@ -64,7 +69,7 @@ def generate():
 @app.after_request
 def after_request(response):
     timestamp = strftime('[%Y-%b-%d %H:%M]')
-    logger.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+    logger.info('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
     return response
 
 @app.errorhandler(Exception)
@@ -75,10 +80,7 @@ def exceptions(e):
     return e.status_code
 
 if __name__ == '__main__':
-    handler = RotatingFileHandler('app.log', maxBytes=100000, backupCount=3)
-    logger = logging.getLogger('tdm')
-    logger.setLevel(logging.ERROR)
-    logger.addHandler(handler)
+
     app.run(
         host="0.0.0.0",
         port=80
