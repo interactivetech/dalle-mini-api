@@ -66,7 +66,8 @@ def generate():
                             'n_images':input_json['n_images'],
                             'gen_top_k':input_json['gen_top_k'],
                             'result': encoded_images})
-        except:
+        except Exception as e:
+            print(e)
             return jsonify({"sorry": "Sorry, no results! Please try again."}), 500
 
 @app.after_request
