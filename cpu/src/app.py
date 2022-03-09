@@ -13,7 +13,6 @@ from model import load_model, generate_images, load_model2
 
 import logging
 from logging.handlers import RotatingFileHandler
-from flask import Flask, request, jsonify
 from time import strftime
 import traceback
 
