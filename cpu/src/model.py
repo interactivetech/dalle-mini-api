@@ -227,7 +227,7 @@ def generate_images(
     n_predictions = n_images
 
     # We can customize top_k/top_p used for generating samples
-    gen_top_k = None
+    gen_top_k = gen_top_k
     gen_top_p = None
 
     # generate images

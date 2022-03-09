@@ -50,7 +50,7 @@ def generate():
                     request.method,
                     request.scheme,
                     request.full_path,
-                    input_json['prompt'])
+                    input_json)
             images =generate_images(
                 input_json['prompt'],
                 input_json['n_images'],
@@ -76,11 +76,11 @@ def generate():
             print(e)
             return jsonify({"sorry": "Sorry, no results! Please try again."}), 500
 
-@app.after_request
-def after_request(response):
-    timestamp = strftime('[%Y-%b-%d %H:%M]')
-    app.logger.info('2-%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
-    return response
+# @app.after_request
+# def after_request(response):
+#     timestamp = strftime('[%Y-%b-%d %H:%M]')
+#     app.logger.info('2-%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+#     return response
 
 # @app.errorhandler(Exception)
 # def exceptions(e):
