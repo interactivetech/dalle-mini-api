@@ -10,7 +10,9 @@ from tqdm import tqdm
 t0=time()
 # for i in tqdm(range(1)):
 # prompt = {'prompt':'the Eiffel tower on the moon','n_images':32}
-prompt = {'prompt':'A blue table','n_images':128}
+
+#TODO(ANDREW): Make test case statements where are required fields are there
+prompt = {'prompt':'A blue table','n_images':40,'gen_top_k':4}
 
 # prompt = {'cat':'A blue table'}
 # res = requests.post('http://localhost:5000/generate', json=prompt)
