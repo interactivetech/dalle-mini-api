@@ -44,7 +44,7 @@ def generate():
             input_json = request.get_json(force=True) 
             print("Prompt: {}".format(input_json['prompt']))
             timestamp = strftime('[%Y-%b-%d %H:%M]')
-    app.logger.info('%s %s %s %s %s %s',
+            app.logger.info('%s %s %s %s %s %s',
                     timestamp,
                     request.remote_addr,
                     request.method,
