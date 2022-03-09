@@ -97,7 +97,7 @@ if __name__ == '__main__':
     logger = logging.getLogger('tdm')
     app.logger.setLevel(logging.INFO)
     app.logger.addHandler(handler)
-    app.logger.info("timestamp,request.remote_addr,request.method,request.scheme,request.full_path,input_json")
+    app.logger.info("timestamp,request.remote_addr,request.method,request.scheme,request.full_path,prompt,n_images,gen_top_k")
     app.run(
         host="0.0.0.0",
         port=80

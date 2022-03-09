@@ -12,7 +12,7 @@ t0=time()
 # prompt = {'prompt':'the Eiffel tower on the moon','n_images':32}
 
 #TODO(ANDREW): Make test case statements where are required fields are there
-prompt = {'prompt':'A blue table','n_images':1,'gen_top_k':4}
+prompt = {'prompt':'A coffee table','n_images':40,'gen_top_k':4}
 
 # prompt = {'cat':'A blue table'}
 # res = requests.post('http://localhost:5000/generate', json=prompt)
