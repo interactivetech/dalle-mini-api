@@ -2,7 +2,8 @@ import jax
 import jax.numpy as jnp
 
 # type used for computation - use bfloat16 on TPU's
-dtype = jnp.bfloat16 if jax.local_device_count() == 8 else jnp.float32
+# dtype = jnp.bfloat16 if jax.local_device_count() == 8 else jnp.float32
+dtype = jnp.bfloat16
 
 # TODO: fix issue with bfloat16
 # dtype = jnp.float32
