@@ -5,7 +5,7 @@ import jax.numpy as jnp
 dtype = jnp.bfloat16 if jax.local_device_count() == 8 else jnp.float32
 
 # TODO: fix issue with bfloat16
-dtype = jnp.float32
+# dtype = jnp.float32
 
 # Load models & tokenizer
 from dalle_mini.model import DalleBart, DalleBartTokenizer
