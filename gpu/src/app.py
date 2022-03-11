@@ -40,44 +40,44 @@ def index():
 @app.route('/generate', methods=['POST'])
 def generate():
     if request.method == "POST":
-        try:
-            input_json = request.get_json(force=True) 
-            print("Prompt: {}".format(input_json['prompt']))
-            timestamp = strftime('%Y-%b-%d-%H:%M')
-            app.logger.info('%s,%s,%s,%s,%s,%s,%s,%s',
-                    timestamp,
-                    request.remote_addr,
-                    request.method,
-                    request.scheme,
-                    request.full_path,
-                    input_json['prompt'],
-                    input_json['n_images'],
-                    input_json['gen_top_k']
-                    )
-            images =generate_images(
+        
+        input_json = request.get_json(force=True) 
+        print("Prompt: {}".format(input_json['prompt']))
+        timestamp = strftime('%Y-%b-%d-%H:%M')
+        app.logger.info('%s,%s,%s,%s,%s,%s,%s,%s',
+                timestamp,
+                request.remote_addr,
+                request.method,
+                request.scheme,
+                request.full_path,
                 input_json['prompt'],
                 input_json['n_images'],
-                model,
-                tokenizer,
-                vqgan,
-                clip,
-                processor,
-                model_params, 
-                vqgan_params, 
-                clip_params,
-                input_json['gen_top_k'],
+                input_json['gen_top_k']
                 )
-            encoded_images = [get_response_image(i) for i in images]
-            # encoded_imges = []
-            # for image_path in range(10):
-            #     encoded_imges.append(get_response_image_test())
-            return jsonify({'prompt':input_json['prompt'],
-                            'n_images':input_json['n_images'],
-                            'gen_top_k':input_json['gen_top_k'],
-                            'result': encoded_images})
-        except Exception as e:
-            print(e)
-            return jsonify({"sorry": "Sorry, no results! Please try again."}), 500
+        images =generate_images(
+            input_json['prompt'],
+            input_json['n_images'],
+            model,
+            tokenizer,
+            vqgan,
+            clip,
+            processor,
+            model_params, 
+            vqgan_params, 
+            clip_params,
+            input_json['gen_top_k'],
+            )
+        encoded_images = [get_response_image(i) for i in images]
+        # encoded_imges = []
+        # for image_path in range(10):
+        #     encoded_imges.append(get_response_image_test())
+        return jsonify({'prompt':input_json['prompt'],
+                        'n_images':input_json['n_images'],
+                        'gen_top_k':input_json['gen_top_k'],
+                        'result': encoded_images})
+        # except Exception as e:
+        #     print(e)
+        #     return jsonify({"sorry": "Sorry, no results! Please try again."}), 500
 
 # @app.after_request
 # def after_request(response):
