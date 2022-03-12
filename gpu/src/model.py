@@ -4,6 +4,13 @@ import jax.numpy as jnp
 # type used for computation - use bfloat16 on TPU's
 # dtype = jnp.bfloat16 if jax.local_device_count() == 8 else jnp.float32
 dtype = jnp.bfloat16
+import numpy as np
+
+def to_jnp(param):
+    if isinstance(param, np.ndarray):
+        param = jnp.array(param).astype(dtype)
+    return param
+
 
 # TODO: fix issue with bfloat16
 # dtype = jnp.float32
@@ -111,8 +118,10 @@ def load_model():
     from flax.jax_utils import replicate
 
     # convert model parameters for inference if requested
+    # if dtype == jnp.bfloat16:
+    #     model.params = model.to_bf16(model.params)
     if dtype == jnp.bfloat16:
-        model.params = model.to_bf16(model.params)
+        model.params = jax.tree_map(to_jnp, model.params)
 
     model_params = replicate(model.params)
     vqgan_params = replicate(vqgan.params)
